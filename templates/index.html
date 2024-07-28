@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Task Master</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1 style="text-align: center">tODOLIST</h1>
+    {% if tasks|length < 1 %}
+    <h4 style="text-align: center">There are no tasks. Create one below!</h4>
+    {% else %}
+    <table  class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Task</th>
+            <th>Added</th>
+            <th>State</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.0 }}</td>
+                <td>{{ task.1 }}</td>
+                <td>{{ task.2 }}</td>
+                <td class="d-flex justify-content-center">
+                    <a class="btn btn-danger" href="/delete/{{task.0}}">Delete</a>
+                    <br>
+                    <a class="btn btn-warning" href="/view/{{task.0}}">view</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    
+
+    <div class="form">
+        <form action="/insert" method="POST">
+            <label for="description" class="form-label">Task Description:</label>
+            <input type="text" class="form-control" name="description" id="description">
+            <label for="state" class="form-label">Task State:</label>
+            <input type="text" class="form-control" name="state" id="state">
+            
+            <input type="submit" class="btn btn-primary justify-content-center" value="Add Task">
+        </form>
+    </div>
+</div>
+{% endblock %}
